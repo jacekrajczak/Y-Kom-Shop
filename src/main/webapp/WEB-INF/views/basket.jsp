@@ -42,7 +42,7 @@
 
     <p>Koszt zamówienia: ${totalPrice.toString()}</p>
 
-    <p><a href="basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a></p>
+    <p><a href="/basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a></p>
 
 </div>
 

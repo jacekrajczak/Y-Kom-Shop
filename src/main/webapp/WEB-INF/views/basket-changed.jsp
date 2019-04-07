@@ -15,7 +15,7 @@
             text-align: right;
         }
 
-        .toasts p {
+        .changes p {
             text-align: center;
         }
     </style>
@@ -44,17 +44,16 @@
         </tbody>
     </table>
 
-    <div class="toasts">
-        <p><a onclick="M.toast({html: 'simple toast'})" class="btn">Zmieniono zamówienie</a></p>
+    <div class="changes">
+        <p>Zmieniono zamówienie!</p>
         <c:forEach items="${productsWithChangedQuantity}" var="product">
-            <p><a onclick="M.toast({html: 'product toast'})" class="btn">Zmieniono ${product.name} ilość w koszyku
-                na: ${product.basketQuantity}</a></p>
+            <p>Zmieniono ${product.name} ilość w koszyku na: ${product.basketQuantity}</p>
         </c:forEach>
     </div>
 
     <p>Koszt zamówienia: ${totalPrice.toString()}</p>
 
-    <p><a href="basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a></p>
+    <p><a href="/basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a></p>
 
 </div>
 
