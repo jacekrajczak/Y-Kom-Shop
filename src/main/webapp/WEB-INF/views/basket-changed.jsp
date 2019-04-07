@@ -5,32 +5,58 @@
 <head>
     <title>Koszyk - poprawa zamówienia</title>
     <jsp:include page="elements/header.jsp"/>
+
+    <style>
+        th {
+            font-weight: normal;
+        }
+
+        p {
+            text-align: right;
+        }
+
+        .toasts p {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="elements/menu.jsp"/>
 
-<ul class="collection">
-    <c:forEach items="${products}" var="product">
-        <li class="collection-item">
-            <div class="container" style="display: inline-block;">
-                <div class="col s8">${product.name}</div>
-                <div class="col s3">${product.prize} zł</div>
-                <div class="col s1">${product.basketQuantity}</div>
-            </div>
+<div class="container">
 
-        </li>
-    </c:forEach>
-</ul>
+    <table>
+        <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Cena</th>
+            <th>Ilość</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${products}" var="product">
+            <tr>
+                <th>${product.name}</th>
+                <th>${product.prize} zł</th>
+                <th>${product.basketQuantity}</th>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
-<a onclick="M.toast({html: 'simple toast'})" class="btn">Zmieniono zamówienie</a>
-<c:forEach items="${productsWithChangedQuantity}" var="product">
-    <a onclick="M.toast({html: 'product toast'})" class="btn">Zmieniono ${product.name} ilość w koszyku
-        na: ${product.basketQuantity}</a>
-</c:forEach>
+    <div class="toasts">
+        <p><a onclick="M.toast({html: 'simple toast'})" class="btn">Zmieniono zamówienie</a></p>
+        <c:forEach items="${productsWithChangedQuantity}" var="product">
+            <p><a onclick="M.toast({html: 'product toast'})" class="btn">Zmieniono ${product.name} ilość w koszyku
+                na: ${product.basketQuantity}</a></p>
+        </c:forEach>
+    </div>
 
-<div>Koszt zamówienia: ${totalPrice.toString()}</div>
+    <p>Koszt zamówienia: ${totalPrice.toString()}</p>
 
-<a href="/basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a>
+    <p><a href="basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a></p>
+
+</div>
 
 </body>
 </html>
