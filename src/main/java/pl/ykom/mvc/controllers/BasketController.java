@@ -102,6 +102,7 @@ public class BasketController {
         if (isQuantityValid) {
             Long orderId = orderService.saveOrder(userId);
             orderProductService.addOrderProductsAndLowerWarehouseQuantity(basket, orderId);
+            orderService.setTotalCost(orderId, getBasketTotalPrice(basket));
 
             session.removeAttribute(basketAttributeName);
 

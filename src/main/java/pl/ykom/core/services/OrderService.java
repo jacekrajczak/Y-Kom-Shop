@@ -7,6 +7,7 @@ import pl.ykom.data.repositories.OrderRepository;
 import pl.ykom.data.repositories.UserRepository;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -35,5 +36,10 @@ public class OrderService {
         orderRepository.saveAndFlush(order);
 
         return order.getOrderId();
+    }
+
+    public void setTotalCost(Long orderId, BigDecimal totalCost) {
+
+        orderRepository.setTotalCost(orderId, totalCost);
     }
 }

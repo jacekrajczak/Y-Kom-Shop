@@ -1,6 +1,7 @@
 package pl.ykom.data.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -31,6 +32,9 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private Set<OrderProduct> orderProducts;
+
+    @Column(name = "total_cost")
+    private BigDecimal totalCost;
 
     public Order(){}
 
@@ -95,5 +99,13 @@ public class Order {
 
     public void setOrderProducts(Set<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
     }
 }
