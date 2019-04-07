@@ -17,7 +17,6 @@
                 <div class="col s3">${product.prize} zł</div>
                 <div class="col s1">${product.basketQuantity}</div>
             </div>
-
         </li>
     </c:forEach>
 </ul>
