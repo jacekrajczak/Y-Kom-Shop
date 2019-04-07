@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>Koszyk</title>
+    <title>Koszyk - poprawa zamówienia</title>
     <jsp:include page="elements/header.jsp"/>
 </head>
 <body>
@@ -22,9 +22,15 @@
     </c:forEach>
 </ul>
 
+<a onclick="M.toast({html: 'simple toast'})" class="btn">Zmieniono zamówienie</a>
+<c:forEach items="${productsWithChangedQuantity}" var="product">
+    <a onclick="M.toast({html: 'product toast'})" class="btn">Zmieniono ${product.name} ilość w koszyku
+        na: ${product.basketQuantity}</a>
+</c:forEach>
+
 <div>Koszt zamówienia: ${totalPrice.toString()}</div>
 
-<a href="basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a>
+<a href="/basket/order" class="waves-effect waves-light btn">Potwierdź zamówienie</a>
 
 </body>
 </html>

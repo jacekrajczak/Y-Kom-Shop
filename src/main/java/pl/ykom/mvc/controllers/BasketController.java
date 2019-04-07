@@ -12,9 +12,8 @@ import pl.ykom.core.services.ProductService;
 import pl.ykom.dto.ProductDTO;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Controller
 @RequestMapping("/basket")
@@ -38,6 +37,9 @@ public class BasketController {
 
         List<ProductDTO> basket = (List<ProductDTO>) session.getAttribute(basketAttributeName);
 
+        BigDecimal totalPrice = getBasketTotalPrice(basket);
+
+        model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("products", basket);
 
         return "basket";
@@ -56,7 +58,7 @@ public class BasketController {
 
         boolean isInside = false;
 
-        for (ProductDTO dto :basket) {
+        for (ProductDTO dto : basket) {
 
             if (dto.equals(productDTO)) {
                 dto.setBasketQuantity(dto.getBasketQuantity() + 1);
@@ -82,12 +84,18 @@ public class BasketController {
 
         Long userId = (Long) session.getAttribute("userId");
 
+        List<ProductDTO> productsWithChangedQuantity = new ArrayList<>();
+
         boolean isQuantityValid = true;
 
         for (ProductDTO productDTO : basket) {
             if (productDTO.getBasketQuantity() > productDTO.getWarehouseQuantity()) {
                 isQuantityValid = false;
-                break;
+
+                // ustawiam ilość na maksymalnie możliwą
+                productDTO.setBasketQuantity(productDTO.getWarehouseQuantity());
+
+                productsWithChangedQuantity.add(productDTO);
             }
         }
 
@@ -98,11 +106,27 @@ public class BasketController {
             session.removeAttribute(basketAttributeName);
 
             return "order-confirm";
-        } else {
-            return "order-not-valid";
-        }
 
+        } else {
+
+            BigDecimal totalPrice = getBasketTotalPrice(basket);
+
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("products", basket);
+            model.addAttribute("productsWithChangedQuantity", productsWithChangedQuantity);
+
+            return "basket-changed";
+        }
     }
 
+    private BigDecimal getBasketTotalPrice(List<ProductDTO> basket) {
+        BigDecimal totalPrice = new BigDecimal(0);
+
+        for (ProductDTO productDTO : basket) {
+            totalPrice = totalPrice.add(productDTO.getPrize()
+                    .multiply(BigDecimal.valueOf(productDTO.getBasketQuantity())));
+        }
+        return totalPrice;
+    }
 
 }

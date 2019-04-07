@@ -13,7 +13,7 @@ public class ProductDTO implements Serializable {
     private String description;
     private Long warehouseQuantity;
 
-    private int basketQuantity;
+    private long basketQuantity;
 
     public Long getId() {
         return id;
@@ -63,11 +63,11 @@ public class ProductDTO implements Serializable {
         this.warehouseQuantity = warehouseQuantity;
     }
 
-    public int getBasketQuantity() {
+    public long getBasketQuantity() {
         return basketQuantity;
     }
 
-    public void setBasketQuantity(int basketQuantity) {
+    public void setBasketQuantity(long basketQuantity) {
         this.basketQuantity = basketQuantity;
     }
 

@@ -29,19 +29,21 @@ public class OrderProductService {
 
     public void addOrderProductsAndLowerWarehouseQuantity(List<ProductDTO> productDTOList, Long orderId) {
 
-        for (ProductDTO productDTO :productDTOList) {
+        for (ProductDTO productDTO : productDTOList) {
 
-            OrderProduct orderProduct = buildOrderProduct(productDTO, orderId);
+            if (productDTO.getBasketQuantity() > 0) {
 
-            orderProductRepository.save(orderProduct);
+                OrderProduct orderProduct = buildOrderProduct(productDTO, orderId);
 
-            Long productId = orderProduct.getProduct().getProductId();
+                orderProductRepository.save(orderProduct);
 
-            Product currentProduct = productRepository.getOne(productId);
-            Long newQuantity = currentProduct.getWarehouseQuantity() - productDTO.getBasketQuantity();
+                Long productId = orderProduct.getProduct().getProductId();
+                Product currentProduct = productRepository.getOne(productId);
+                Long newQuantity = currentProduct.getWarehouseQuantity() - productDTO.getBasketQuantity();
 
-            productRepository.updateWarehouseQuantity(productId, newQuantity);
-            productRepository.flush();
+                productRepository.updateWarehouseQuantity(productId, newQuantity);
+                productRepository.flush();
+            }
         }
     }
 
@@ -51,7 +53,7 @@ public class OrderProductService {
 
         orderProduct.setOrder(orderRepository.getOne(orderId));
         orderProduct.setProduct(productRepository.getOne(productDTO.getId()));
-        orderProduct.setQuantity((long) productDTO.getBasketQuantity());
+        orderProduct.setQuantity(productDTO.getBasketQuantity());
 
         return orderProduct;
     }
