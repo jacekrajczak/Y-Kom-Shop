@@ -1,8 +1,10 @@
 package pl.ykom.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
-public class ProductDTO {
+public class ProductDTO implements Serializable {
 
     private Long id;
     private String name;
@@ -80,5 +82,18 @@ public class ProductDTO {
                 ", warehouseQuantity=" + warehouseQuantity +
                 ", basketQuantity=" + basketQuantity +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDTO that = (ProductDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

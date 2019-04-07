@@ -11,7 +11,6 @@ import pl.ykom.dto.ProductDTO;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,14 +27,22 @@ public class OrderProductService {
         this.productRepository = productRepository;
     }
 
-    public void addOrderProducts(List<ProductDTO> productDTOList, Long orderId) {
+    public void addOrderProductsAndLowerWarehouseQuantity(List<ProductDTO> productDTOList, Long orderId) {
 
-        List<OrderProduct> collect = productDTOList
-                .stream()
-                .map((productDTO) -> buildOrderProduct(productDTO, orderId))
-                .collect(Collectors.toList());
+        for (ProductDTO productDTO :productDTOList) {
 
-        orderProductRepository.saveAll(collect);
+            OrderProduct orderProduct = buildOrderProduct(productDTO, orderId);
+
+            orderProductRepository.save(orderProduct);
+
+            Long productId = orderProduct.getProduct().getProductId();
+
+            Product currentProduct = productRepository.getOne(productId);
+            Long newQuantity = currentProduct.getWarehouseQuantity() - productDTO.getBasketQuantity();
+
+            productRepository.updateWarehouseQuantity(productId, newQuantity);
+            productRepository.flush();
+        }
     }
 
     private OrderProduct buildOrderProduct(ProductDTO productDTO, Long orderId) {

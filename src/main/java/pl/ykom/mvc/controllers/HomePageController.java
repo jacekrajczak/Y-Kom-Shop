@@ -5,10 +5,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.ykom.core.services.CategoryService;
 import pl.ykom.core.services.ProductService;
 import pl.ykom.data.model.Category;
@@ -16,6 +13,7 @@ import pl.ykom.data.model.Product;
 import pl.ykom.dto.CategoryDTO;
 import pl.ykom.dto.ProductDTO;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -53,5 +51,14 @@ public class HomePageController {
         model.addAttribute("categories",categories);
 
         return "home";
+    }
+
+    @GetMapping("testlog")
+    @ResponseBody
+    public String testLog(HttpSession session) {
+
+        session.setAttribute("userId",1L);
+
+        return "Zalogowano";
     }
 }

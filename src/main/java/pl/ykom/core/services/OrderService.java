@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.ykom.data.model.Order;
 import pl.ykom.data.repositories.OrderRepository;
 import pl.ykom.data.repositories.UserRepository;
-import pl.ykom.dto.OrderDTO;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -18,8 +17,9 @@ public class OrderService {
     private UserRepository userRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
 
     }
 
@@ -32,7 +32,7 @@ public class OrderService {
         order.setDescription("domyślny opis");
         order.setOrderDate(LocalDate.now());
 
-        orderRepository.save(order);
+        orderRepository.saveAndFlush(order);
 
         return order.getOrderId();
     }

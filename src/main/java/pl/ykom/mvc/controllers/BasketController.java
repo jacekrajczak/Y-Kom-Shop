@@ -13,8 +13,8 @@ import pl.ykom.dto.ProductDTO;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/basket")
@@ -52,17 +52,25 @@ public class BasketController {
 
         if (basket == null) {
             basket = new ArrayList<>();
-            session.setAttribute(basketAttributeName, basket);
         }
 
-        if (basket.contains(productDTO)) {
-            productDTO.setBasketQuantity(productDTO.getBasketQuantity() + 1);
-        } else {
+        boolean isInside = false;
+
+        for (ProductDTO dto :basket) {
+
+            if (dto.equals(productDTO)) {
+                dto.setBasketQuantity(dto.getBasketQuantity() + 1);
+                isInside = true;
+                break;
+            }
+        }
+
+        if (!isInside) {
             productDTO.setBasketQuantity(1);
             basket.add(productDTO);
         }
 
-        session.setAttribute(basketAttributeName,basket);
+        session.setAttribute(basketAttributeName, basket);
 
         return "basket-confirm";
     }
@@ -74,12 +82,26 @@ public class BasketController {
 
         Long userId = (Long) session.getAttribute("userId");
 
-        Long orderId = orderService.saveOrder(userId);
-        orderProductService.addOrderProducts(basket, orderId);
+        boolean isQuantityValid = true;
 
-        session.removeAttribute(basketAttributeName);
+        for (ProductDTO productDTO : basket) {
+            if (productDTO.getBasketQuantity() > productDTO.getWarehouseQuantity()) {
+                isQuantityValid = false;
+                break;
+            }
+        }
 
-        return "order-confirm";
+        if (isQuantityValid) {
+            Long orderId = orderService.saveOrder(userId);
+            orderProductService.addOrderProductsAndLowerWarehouseQuantity(basket, orderId);
+
+            session.removeAttribute(basketAttributeName);
+
+            return "order-confirm";
+        } else {
+            return "order-not-valid";
+        }
+
     }
 
 
