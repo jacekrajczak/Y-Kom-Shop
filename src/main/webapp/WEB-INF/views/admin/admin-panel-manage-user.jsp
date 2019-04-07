@@ -5,41 +5,41 @@
 <html>
 <head>
     <title>Admin Panel</title>
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="../elements/header.jsp"/>
 </head>
 <body>
-    <jsp:include page="menu.jsp"/>
+    <jsp:include page="../elements/menu.jsp"/>
 
 
     <div class="container">
         <div class="row">
             <div class="col s3">
                 <div class="collection">
-                    <li>
-                        <a href="">Zlecenia</a>
-                        <a href="">Produkty</a>
-                        <a href="">Użytkownicy</a>
-                    </li>
+                    <a href="/admin" class="collection-item">Zlecenia</a>
+                    <a href="/admin/manage-product" class="collection-item">Produkty</a>
+                    <a href="/admin/manage-user" class="collection-item">Użytkownicy</a>
                 </div>
             </div>
 
             <div class="col s9">
                 <fieldset>
 
-                    <form:form action="post" modelAttribute="">
+                    <form:form action="post" modelAttribute="" cssStyle="text-align: center;">
 
-                        imię <form:input path="" />
-                        nazwisko <form:input path="" />
-                        login <form:input path="" />
-                        email <form:input path="" />
-                        hasło <form:input path="" />
-                        numer telefonu <form:input path="" />
-                        adres <form:input path="" />
-                        kod pocztowy <form:input path="" />
-                        miasto <form:input path="" />
+                        Imię <form:input path="" />
+                        Nazwisko <form:input path="" />
+                        Login <form:input path="" />
+                        Hasło <form:input path="" />
+                        E-mail <form:input path="" />
+                        Numer telefonu <form:input path="" />
+                        Adres <form:input path="" />
+                        Kod pocztowy <form:input path="" />
+                        Miasto <form:input path="" />
 
-                        <input type="submit" value="Update">
-                        <input type="submit" value="Delete">
+                        <button type="submit" class="btn waves-effect waves-light">Dodaj</button>
+                        <button type="submit" class="btn waves-effect waves-light">Uaktualnij</button>
+                        <button type="submit" class="btn waves-effect waves-light">Usuń</button>
+
 
                     </form:form>
                 </fieldset>

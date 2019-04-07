@@ -12,12 +12,12 @@
 <div class="container">
     <div class="row">
         <div class="col s3">
-            <div class="collection">
-                <li>
-                    <a href="">Zlecenia</a>
-                    <a href="">Produkty</a>
-                    <a href="">Użytkownicy</a>
-                </li>
+            <div class="col s3">
+                <div class="collection">
+                    <a href="/admin" class="collection-item">Zlecenia</a>
+                    <a href="/admin/manage-product" class="collection-item">Produkty</a>
+                    <a href="/admin/manage-user" class="collection-item">Użytkownicy</a>
+                </div>
             </div>
         </div>
 

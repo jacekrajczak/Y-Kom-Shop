@@ -38,9 +38,21 @@ public class AdminController {
         this.productService = productService;
     }
 
+    @GetMapping("/manage-user")
+    public String getUserManageAdminPanelPage(Model model){
+        Order order = new Order();
+        model.addAttribute("", order);
+        return "/admin/admin-panel-manage-user";
+    }
 
+    @GetMapping("/manage-product")
+    public String getProductManageAdminPanelPage(Model model){
+        Order order = new Order();
+        model.addAttribute("", order);
+        return "/admin/admin-panel-manage-products";
+    }
 
-    @RequestMapping("/add/product")
+    @RequestMapping("")
     private String addProduct(String name, BigDecimal prize, String categoryName, String description, Long warehouseQuantity){
 
         ProductDTO productDTO = new ProductDTO();
@@ -51,26 +63,7 @@ public class AdminController {
         productDTO.setDescription(description);
         productDTO.setWarehouseQuantity(warehouseQuantity);
 
-        return "/admin/admin-panel-new-product-added";
+        return "";
     }
-//
-//    @PostMapping
-//    private String deleteProduct(){
-//        return "";
-//    }
-//
-//    @GetMapping
-//    public String prepareAdminPanel(){
-//        return "";
-//    }
-//
-//    @GetMapping
-//    private String manageOrders(){
-//        return "";
-//    }
-//
-////    @PostMapping
-////    public String editUser(){
-////        return ;
-////    }
+
 }

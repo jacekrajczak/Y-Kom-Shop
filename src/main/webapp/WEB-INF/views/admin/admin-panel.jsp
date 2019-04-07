@@ -13,9 +13,9 @@
         <div class="row">
             <div class="col s3">
                 <div class="collection">
-                        <a href="admin" class="collection-item">Zlecenia</a>
-                        <a href="add/product" class="collection-item">Produkty</a>
-                        <a href="" class="collection-item">Użytkownicy</a>
+                        <a href="/admin" class="collection-item">Zlecenia</a>
+                        <a href="/admin/manage-product" class="collection-item">Produkty</a>
+                        <a href="/admin/manage-user" class="collection-item">Użytkownicy</a>
                 </div>
             </div>
 
