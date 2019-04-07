@@ -106,6 +106,9 @@ public class BasketController {
 
             session.removeAttribute(basketAttributeName);
 
+            // TODO:
+            // obsłużyć zamówienie puste
+
             return "order-confirm";
 
         } else {

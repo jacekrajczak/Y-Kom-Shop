@@ -11,33 +11,41 @@
 
 <div class="container">
     <div class="row">
-        <div class="col s3">
+        <div class="col s2">
             <div class="collection">
                 <c:forEach items="${categories}" var="category">
-                    <a href="/category/${category.name}" class="collection-item">${category.name}</a>
+                    <a href="/category/${category.name}" class="collection-item"
+                       style="padding: 5px 5px">${category.name}</a>
                 </c:forEach>
             </div>
         </div>
 
-        <div class="col s9">
-            <ul class="collection">
+        <div class="col s10">
+            <table>
+                <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena</th>
+                    <th>Ilość</th>
+                </tr>
+                </thead>
+                <tbody>
                 <c:forEach items="${products}" var="product">
-                    <li class="collection-item">
-                        <div class="container" style="display: inline-block; width: 100%;">
-                            <div class="col s8">${product.name}</div>
-                            <div class="col s3">${product.prize} zł</div>
-                            <div class="col s1">
-                                <form action="/basket/add" method="post">
-                                    <input type="hidden" name="productId" value="${product.id}"/>
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-cart-plus" style="font-size: 1.4rem"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </li>
+                    <tr>
+                        <th>${product.name}</th>
+                        <th>${product.prize} zł</th>
+                        <th>
+                            <form action="/basket/add" method="post">
+                                <input type="hidden" name="productId" value="${product.id}"/>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-cart-plus" style="font-size: 1.4rem"></i>
+                                </button>
+                            </form>
+                        </th>
+                    </tr>
                 </c:forEach>
-            </ul>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

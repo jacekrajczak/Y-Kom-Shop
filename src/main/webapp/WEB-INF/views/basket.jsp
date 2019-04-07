@@ -7,10 +7,6 @@
     <jsp:include page="elements/header.jsp"/>
 
     <style>
-        th {
-            font-weight: normal;
-        }
-
         p {
             text-align: right;
         }
