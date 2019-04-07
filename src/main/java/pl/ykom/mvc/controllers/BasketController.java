@@ -37,7 +37,7 @@ public class BasketController {
 
         List<ProductDTO> basket = (List<ProductDTO>) session.getAttribute(basketAttributeName);
 
-        BigDecimal totalPrice = getBasketTotalPrice(basket);
+        BigDecimal totalPrice = basket != null ? getBasketTotalPrice(basket) : BigDecimal.ZERO;
 
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("products", basket);
