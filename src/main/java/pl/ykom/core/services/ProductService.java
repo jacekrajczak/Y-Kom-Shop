@@ -43,7 +43,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    private ProductDTO buildProductDTO(Product product) {
+    public ProductDTO buildProductDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getProductId());

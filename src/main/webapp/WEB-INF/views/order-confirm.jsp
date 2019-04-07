@@ -8,7 +8,7 @@
 <body>
 <jsp:include page="elements/menu.jsp"/>
 
-
+Zamówienie skompletowane!
 
 </body>
 </html>

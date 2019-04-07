@@ -23,15 +23,17 @@ public class OrderService {
 
     }
 
-//    public void saveOrder(Long userId) {
-//
-//        Order order = new Order();
-//
-//        order.setUser(userRepository.getOne(userId));
-//        order.setStatus("Zamówiono");
-//        order.setDescription("domyślny opis");
-//        order.setOrderDate(LocalDate.now());
-//        order.setOrderProducts(null);
-//
-//    }
+    public Long saveOrder(Long userId) {
+
+        Order order = new Order();
+
+        order.setUser(userRepository.getOne(userId));
+        order.setStatus("Zamówiono");
+        order.setDescription("domyślny opis");
+        order.setOrderDate(LocalDate.now());
+
+        orderRepository.save(order);
+
+        return order.getOrderId();
+    }
 }

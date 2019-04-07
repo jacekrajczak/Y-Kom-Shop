@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.ykom.core.services.OrderProductService;
+import pl.ykom.core.services.OrderService;
 import pl.ykom.core.services.ProductService;
-import pl.ykom.data.model.Product;
 import pl.ykom.dto.ProductDTO;
 
 import javax.servlet.http.HttpSession;
@@ -21,29 +21,24 @@ import java.util.List;
 public class BasketController {
 
     private ProductService productService;
+    private OrderService orderService;
+    private OrderProductService orderProductService;
+
+    private final String basketAttributeName = "basket";
 
     @Autowired
-    public BasketController(ProductService productService) {
+    public BasketController(ProductService productService, OrderService orderService, OrderProductService orderProductService) {
         this.productService = productService;
+        this.orderService = orderService;
+        this.orderProductService = orderProductService;
     }
 
     @GetMapping
     public String getBasketPage(HttpSession session, Model model) {
 
-        Enumeration<String> attributeNames = session.getAttributeNames();
+        List<ProductDTO> basket = (List<ProductDTO>) session.getAttribute(basketAttributeName);
 
-        List<ProductDTO> productDTOList = new ArrayList<>();
-
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            ProductDTO productDTO = (ProductDTO) session.getAttribute(attributeName);
-
-            System.out.println(productDTO);
-
-            productDTOList.add(productDTO);
-        }
-
-        model.addAttribute("products",productDTOList);
+        model.addAttribute("products", basket);
 
         return "basket";
     }
@@ -53,39 +48,36 @@ public class BasketController {
 
         ProductDTO productDTO = productService.getProduct(productId);
 
-        System.out.println(productDTO);
+        List<ProductDTO> basket = (List<ProductDTO>) session.getAttribute(basketAttributeName);
 
-        String attributeName = productDTO.getName() + "-" + productDTO.getId();
+        if (basket == null) {
+            basket = new ArrayList<>();
+            session.setAttribute(basketAttributeName, basket);
+        }
 
-        ProductDTO attribute = (ProductDTO) session.getAttribute(attributeName);
-
-        if (attribute != null) {
-            attribute.setBasketQuantity(attribute.getBasketQuantity() + 1);
+        if (basket.contains(productDTO)) {
+            productDTO.setBasketQuantity(productDTO.getBasketQuantity() + 1);
         } else {
             productDTO.setBasketQuantity(1);
-            session.setAttribute(attributeName, productDTO);
+            basket.add(productDTO);
         }
+
+        session.setAttribute(basketAttributeName,basket);
 
         return "basket-confirm";
     }
 
-    @PostMapping("/order")
+    @GetMapping("/order")
     public String confirmOrder(HttpSession session, Model model) {
 
-        Enumeration<String> attributeNames = session.getAttributeNames();
+        List<ProductDTO> basket = (List<ProductDTO>) session.getAttribute(basketAttributeName);
 
-        List<ProductDTO> productDTOList = new ArrayList<>();
+        Long userId = (Long) session.getAttribute("userId");
 
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            ProductDTO productDTO = (ProductDTO) session.getAttribute(attributeName);
+        Long orderId = orderService.saveOrder(userId);
+        orderProductService.addOrderProducts(basket, orderId);
 
-            System.out.println(productDTO);
-
-            productDTOList.add(productDTO);
-        }
-
-
+        session.removeAttribute(basketAttributeName);
 
         return "order-confirm";
     }
