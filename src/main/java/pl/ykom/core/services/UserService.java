@@ -1,11 +1,13 @@
 package pl.ykom.core.services;
 
 import org.springframework.stereotype.Service;
+import pl.ykom.data.model.Order;
 import pl.ykom.data.model.User;
 import pl.ykom.data.repositories.UserRepository;
 import pl.ykom.dto.UserDTO;
 
 import javax.transaction.Transactional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -38,5 +40,4 @@ public class UserService {
 
         return user;
     }
-
 }
