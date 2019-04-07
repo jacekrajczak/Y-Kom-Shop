@@ -11,7 +11,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col s2">
+        <div class="col s3">
             <div class="collection">
                 <c:forEach items="${categories}" var="category">
                     <a href="/category/${category.name}" class="collection-item"
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="col s10">
+        <div class="col s9">
             <table>
                 <thead>
                 <tr>

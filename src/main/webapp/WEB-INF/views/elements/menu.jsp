@@ -9,7 +9,11 @@
                     <li><a href="/">Y-Kom</a></li>
                 </div>
                 <div class="col s5">
-                    <li><input type="text" placeholder="Czego szukasz?"></li>
+                    <li>
+                        <form action="/search" method="post" style="display: inline">
+                            <input type="text" name="search" placeholder="Czego szukasz?">
+                        </form>
+                    </li>
                 </div>
                 <div class="col s2">
                     <li><a href="/">Zaloguj</a></li>
