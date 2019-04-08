@@ -38,9 +38,9 @@ public class LoginController {
             response.sendError(401, "Błędne dane logowania");
             return;
         }
-        UserDTO user = userService.getUser(login, password);
+        /*UserDTO user = userService.getUser(login, password);
         session.setAttribute("user", user);
-        response.sendRedirect("/");
+        response.sendRedirect("/");*/
     }
 
     @GetMapping("/register")
