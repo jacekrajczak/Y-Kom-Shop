@@ -1,5 +1,7 @@
 package pl.ykom.core.services;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import pl.ykom.data.model.Order;
 import pl.ykom.data.model.User;
@@ -40,4 +42,23 @@ public class UserService {
 
         return user;
     }
+
+    public boolean checkCredentials(String login, String password) {
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        return userRepository.exists(Example.of(user, ExampleMatcher.matching().withIgnoreNullValues()));
+    }
+
+    /*public UserDTO getUser(String login, String password) {
+        User user = userRepository.findByLogin(login);
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.
+
+        return UserDTO.newBuilder()
+                .login(user.getLogin())
+                .id(user.getUserId())
+                .build();
+    }*/
 }

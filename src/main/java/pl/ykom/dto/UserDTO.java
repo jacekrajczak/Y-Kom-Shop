@@ -35,6 +35,10 @@ public class UserDTO {
         setCity(builder.city);
     }
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -123,7 +127,6 @@ public class UserDTO {
         this.orders = orders;
     }
 
-    @Data
     private static final class Builder {
         private Long userId;
         private String firstName;
@@ -136,6 +139,8 @@ public class UserDTO {
         private String postcode;
         private String city;
         private Set<Order> orders;
+
+        private Builder(){}
 
         public Builder userId(Long userId) {
             this.userId = userId;
@@ -195,5 +200,6 @@ public class UserDTO {
         public UserDTO build() {
             return new UserDTO(this);
         }
+
     }
 }
